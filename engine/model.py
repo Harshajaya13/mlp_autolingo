@@ -7,21 +7,17 @@ class TextPredictor(nn.Module):
         super().__init__()
         self.config = config
         self.token_embedding = nn.Embedding(config.vocab_size, config.n_embd)
-        self.position_embedding = nn.Embedding(config.block_size, config.n_embd)
-        self.linear_hidden = nn.Linear(config.n_embd, config.n_embd * 4)
-        self.linear_output = nn.Linear(config.n_embd * 4, config.vocab_size)
+        self.rnn = nn.GRU(config.n_embd, config.n_embd, num_layers=2, batch_first=True)
+        self.linear_output = nn.Linear(config.n_embd, config.vocab_size)
         
     def count_parameters(self):
         return sum(p.numel() for p in self.parameters() if p.requires_grad)
     
     def forward(self, idx, targets=None):
-        B, T = idx.shape
-        tok_embed = self.token_embedding(idx)
-        pos_embed = self.position_embedding(torch.arange(T, device=self.config.device))
+        x = self.token_embedding(idx)
         
-        x = tok_embed + pos_embed
+        x, _ = self.rnn(x)
         
-        x = torch.relu(self.linear_hidden(x))
         logits = self.linear_output(x)
         
         loss = None
@@ -34,5 +30,5 @@ class TextPredictor(nn.Module):
         return logits, loss
 
     def __repr__(self):
-        return f"TextPredictor(vocab={self.config.vocab_size}, params={self.count_parameters()})"
+        return f"TextPredictor(RNN, vocab={self.config.vocab_size}, params={self.count_parameters()})"
 

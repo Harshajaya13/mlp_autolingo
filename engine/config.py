@@ -1,12 +1,12 @@
 import torch
 class Config:
     vocab_size=65
-    block_size=32 
-    batch_size = 16
-    n_embd = 64
+    block_size=64 
+    batch_size = 32
+    n_embd = 128
     lr = 1e-3
-    max_steps = 2000
-    eval_interval = 100
+    max_steps = 3000
+    eval_interval = 250
     eval_iters = 50
     
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
