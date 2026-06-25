@@ -3,42 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoLingo Engine</title>
+    <title>autolingo</title>
+    <!-- Monkeytype Fonts and Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Minimal Header -->
-        <header class="header">
-            <div class="logo">
-                <span class="logo-icon">⚡</span>
-                <span class="logo-text">AutoLingo</span>
+    <div id="app">
+        <!-- Header -->
+        <header>
+            <div id="logo" class="logo">
+                <div class="icon"><i class="fa-solid fa-keyboard"></i></div>
+                <div class="text">autolingo</div>
             </div>
-            <div class="status">
-                <span class="status-text">model active</span>
+            <div id="menu">
+                <a href="#" class="active"><i class="fa-solid fa-keyboard"></i></a>
+                <a href="#"><i class="fa-solid fa-crown"></i></a>
+                <a href="#"><i class="fa-solid fa-info"></i></a>
+                <a href="#"><i class="fa-solid fa-gear"></i></a>
+            </div>
+            <div id="user">
+                <a href="#"><i class="fa-regular fa-user"></i></a>
             </div>
         </header>
 
-        <!-- Centered Typing Area -->
-        <main class="typing-section" id="typing-section">
-            <div class="editor-container" id="editor-container">
-                <!-- Single flawless display line -->
-                <span id="typed-text" class="typed"></span><span id="caret" class="caret">&#8203;</span><span id="predicted-text" class="prediction"></span>
-                <div id="placeholder" class="placeholder">type to start...</div>
+        <!-- Command/Config Bar -->
+        <div id="command-bar">
+            <div class="group">
+                <a href="#">@ punctuation</a>
+                <a href="#"># numbers</a>
+            </div>
+            <div class="group">
+                <a href="#">time</a>
+                <a href="#">words</a>
+                <a href="#">quote</a>
+                <a href="#" class="active">story</a>
+                <a href="#">zen</a>
+            </div>
+            <div class="group">
+                <a href="#">15</a>
+                <a href="#">30</a>
+                <a href="#">60</a>
+                <a href="#">120</a>
+            </div>
+        </div>
+
+        <!-- Typing Area -->
+        <main id="typing-area">
+            <div id="words-wrapper">
+                <div id="words" class="words">
+                    <span id="typed-text" class="typed"></span><span id="caret" class="inline-caret">&#8203;</span><span id="predicted-text" class="prediction"></span>
+                </div>
             </div>
             <!-- Invisible Input -->
-            <textarea id="hidden-input" class="hidden-input" spellcheck="false" autocomplete="off" autofocus></textarea>
+            <textarea id="hidden-input" autocomplete="off" spellcheck="false" autofocus></textarea>
         </main>
 
-        <!-- Minimal Footer -->
-        <footer class="footer">
-            <div class="shortcuts">
-                <span class="key">tab</span> or <span class="key">→</span> to complete
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="key">esc</span> to clear
+        <!-- Footer -->
+        <footer>
+            <div class="left">
+                <a href="#"><i class="fa-solid fa-envelope"></i> contact</a>
+                <a href="#"><i class="fa-solid fa-heart"></i> donate</a>
+                <a href="#"><i class="fa-brands fa-github"></i> github</a>
+                <a href="#"><i class="fa-brands fa-discord"></i> discord</a>
+            </div>
+            <div class="right">
+                <a href="#" class="shortcuts-hint"><i class="fa-solid fa-code"></i> Tab to autocomplete &nbsp;&nbsp; Esc to clear</a>
+                <a href="#"><i class="fa-solid fa-palette"></i> theme</a>
+                <a href="#" class="theme-name">dracula</a>
             </div>
         </footer>
     </div>

@@ -2,7 +2,6 @@ const hiddenInput = document.getElementById('hidden-input');
 const typedSpan = document.getElementById('typed-text');
 const predSpan = document.getElementById('predicted-text');
 const caretSpan = document.getElementById('caret');
-const placeholder = document.getElementById('placeholder');
 
 let debounceTimer;
 const DEBOUNCE_MS = 100;
@@ -11,17 +10,22 @@ function updateDisplay() {
     const text = hiddenInput.value;
     
     if (text === '') {
-        placeholder.classList.remove('hidden');
         typedSpan.textContent = '';
+        // Only show prediction placeholder if empty
+        if (!predSpan.textContent) {
+            predSpan.textContent = 'type to start auto-completing your story...';
+            predSpan.style.opacity = '0.5';
+        }
     } else {
-        placeholder.classList.add('hidden');
         typedSpan.textContent = text;
+        predSpan.style.opacity = '0.7'; // Restore normal ghost opacity
     }
 }
 
 function fetchPrediction(promptText) {
     if (!promptText) {
-        predSpan.textContent = '';
+        predSpan.textContent = 'type to start auto-completing your story...';
+        predSpan.style.opacity = '0.5';
         return;
     }
     
@@ -37,6 +41,7 @@ function fetchPrediction(promptText) {
         if (data.completion) {
             let clean = data.completion.replace(/^\n+/, '').replace(/\n/g, ' ');
             predSpan.textContent = clean;
+            predSpan.style.opacity = '0.7';
         } else {
             predSpan.textContent = '';
         }
@@ -55,7 +60,7 @@ hiddenInput.addEventListener('input', () => {
 hiddenInput.addEventListener('keydown', (e) => {
     const pred = predSpan.textContent;
     
-    if ((e.key === 'Tab' || e.key === 'ArrowRight') && pred) {
+    if ((e.key === 'Tab' || e.key === 'ArrowRight') && pred && hiddenInput.value !== '') {
         e.preventDefault();
         hiddenInput.value += pred;
         updateDisplay();
@@ -71,7 +76,7 @@ hiddenInput.addEventListener('keydown', (e) => {
 hiddenInput.addEventListener('focus', () => caretSpan.classList.remove('unfocused'));
 hiddenInput.addEventListener('blur', () => caretSpan.classList.add('unfocused'));
 
-// Force focus when clicking anywhere
+// Force focus when clicking anywhere on the document
 document.addEventListener('click', () => {
     hiddenInput.focus();
 });
@@ -79,5 +84,4 @@ document.addEventListener('click', () => {
 window.addEventListener('DOMContentLoaded', () => {
     hiddenInput.focus();
     updateDisplay();
-    predSpan.textContent = '';
 });
