@@ -13,6 +13,6 @@ class Config:
     
     def __repr__(self):
         return (f"Config(n_embd={self.n_embd}, block_size={self.block_size}, "
-                f"lr={self.learning_rate}, device={self.device})")
+                f"lr={self.lr}, device={self.device})")
 
 
