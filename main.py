@@ -49,13 +49,26 @@ def main():
     
     model = TextPredictor(config).to(config.device)
     
-    # Check if a trained checkpoint exists to save training time
+    # Check if a trained checkpoint exists
     checkpoint_path = "checkpoints/model.pt"
     skip_training = False
     if os.path.exists(checkpoint_path):
-        ans = input("Found a trained model checkpoint. Load it and skip training? (y/n) [default: y]: ").strip().lower()
-        if ans in ('', 'y', 'yes'):
-            print(f"Loading checkpoint from {checkpoint_path}...")
+        print(f"\n[!] Found existing AI checkpoint at {checkpoint_path}.")
+        print("What would you like to do?")
+        print("  [1] Skip training and just test the UI (Default)")
+        print("  [2] RESUME training from this checkpoint (Make it smarter)")
+        print("  [3] DELETE checkpoint and start from scratch")
+        ans = input("\nEnter choice (1/2/3): ").strip()
+        
+        if ans == '2':
+            print("Loading checkpoint to RESUME training...")
+            model.load_state_dict(torch.load(checkpoint_path, map_location=config.device))
+            skip_training = False
+        elif ans == '3':
+            print("Starting training completely from scratch...")
+            skip_training = False
+        else:
+            print("Loading checkpoint for inference...")
             model.load_state_dict(torch.load(checkpoint_path, map_location=config.device))
             skip_training = True
             
