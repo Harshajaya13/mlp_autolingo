@@ -15,10 +15,10 @@ class TextDatabase(Dataset):
         y = self.token_ids[idx+1:idx+1+block_size]
         return x,y
     
-    def get_batch(dataset,batch_size,device):
-        idx = torch.randint(len(dataset),(batch_size,))
-        x_stack = torch.stack([dataset[i][0] for i in idx])
-        y_stack = torch.stack([dataset[i][1] for i in idx])
-        return x_stack.to(device), y_stack.to(device)
+def get_batch(dataset,batch_size,device):
+    idx = torch.randint(len(dataset),(batch_size,))
+    x_stack = torch.stack([dataset[i][0] for i in idx])
+    y_stack = torch.stack([dataset[i][1] for i in idx])
+    return x_stack.to(device), y_stack.to(device)
 
 
