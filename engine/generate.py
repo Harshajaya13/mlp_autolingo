@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 
-def generate_completion(model, tokenizer, config, prompt, max_new_tokens=100):
+def generate_completion(model, tokenizer, config, prompt, max_new_tokens=100, temperature=0.6, top_k=5):
     model.eval()
     
     token_ids = tokenizer.encode(prompt)
@@ -15,8 +15,13 @@ def generate_completion(model, tokenizer, config, prompt, max_new_tokens=100):
         for _ in range(max_new_tokens):
             context_cond = context[:, -config.block_size :]
             logits, _ = model(context_cond)
-            # Slicing the last token's logits for all vocabulary items
             logits = logits[:, -1, :]
+            
+            logits = logits / temperature
+            if top_k is not None:
+                v, _ = torch.topk(logits, min(top_k, logits.size(-1)))
+                logits[logits < v[:, [-1]]] = -float('Inf')
+                
             probs = F.softmax(logits, dim=-1)
             next_token = torch.multinomial(probs, num_samples=1) 
             context = torch.cat((context, next_token), dim=1)
