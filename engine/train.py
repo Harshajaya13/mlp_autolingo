@@ -1,4 +1,4 @@
 import torch
 import torch.nn.functional as F
-from engine.dataset import get_batch
+from dataset import get_batch
 
