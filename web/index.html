@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoLingo Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Minimal Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">AutoLingo</span>
+            </div>
+            <div class="status">
+                <span class="status-text">model active</span>
+            </div>
+        </header>
+
+        <!-- Centered Typing Area -->
+        <main class="typing-section" id="typing-section">
+            <div class="editor-container" id="editor-container">
+                <!-- Single flawless display line -->
+                <span id="typed-text" class="typed"></span><span id="caret" class="caret">&#8203;</span><span id="predicted-text" class="prediction"></span>
+                <div id="placeholder" class="placeholder">type to start...</div>
+            </div>
+            <!-- Invisible Input -->
+            <textarea id="hidden-input" class="hidden-input" spellcheck="false" autocomplete="off" autofocus></textarea>
+        </main>
+
+        <!-- Minimal Footer -->
+        <footer class="footer">
+            <div class="shortcuts">
+                <span class="key">tab</span> or <span class="key">→</span> to complete
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="key">esc</span> to clear
+            </div>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

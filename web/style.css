@@ -1,0 +1,148 @@
+:root {
+    --bg-color: #323437;
+    --text-typed: #d1d0c5;
+    --text-ghost: #646669;
+    --accent: #e2b714;
+    --font-mono: 'Roboto Mono', monospace;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-typed);
+    font-family: var(--font-mono);
+    overflow: hidden;
+    height: 100vh;
+    cursor: text; /* Entire background acts as text input area */
+}
+
+/* Container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-ghost);
+    margin-bottom: 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-typed);
+}
+
+.logo-icon {
+    color: var(--accent);
+}
+
+.status-text {
+    font-size: 0.9rem;
+}
+
+/* Typing Section */
+.typing-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+/* Editor Container holds the visible text */
+.editor-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    font-size: 36px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: left;
+    margin: 0 auto;
+}
+
+/* Spans inside display */
+.typed {
+    color: var(--text-typed);
+}
+
+/* Blinking Custom Caret */
+.caret {
+    display: inline-block;
+    border-left: 3px solid var(--accent);
+    margin-right: -3px; /* Prevents layout shift */
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* If the textarea loses focus, stop blinking to indicate inactivity */
+.caret.unfocused {
+    opacity: 0 !important;
+    animation: none;
+}
+
+.prediction {
+    color: var(--text-ghost);
+}
+
+.placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--text-ghost);
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.placeholder.hidden {
+    display: none;
+}
+
+/* Completely hidden textarea for capturing keystrokes */
+.hidden-input {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: var(--text-ghost);
+    font-size: 0.9rem;
+    padding-top: 2rem;
+}
+
+.key {
+    background-color: var(--text-ghost);
+    color: var(--bg-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
