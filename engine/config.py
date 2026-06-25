@@ -5,7 +5,7 @@ class Config:
     batch_size = 32
     n_embd = 128
     lr = 1e-3
-    max_steps = 3000
+    max_steps = 30000
     eval_interval = 250
     eval_iters = 50
     
