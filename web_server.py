@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import urllib.request
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import torch
 
@@ -12,13 +13,36 @@ from engine.tokenizer import CharTokenizer
 from engine.model import TextPredictor
 from engine.generate import generate_completion
 
+# Ensure target directories exist
+os.makedirs("checkpoints", exist_ok=True)
+os.makedirs("results", exist_ok=True)
+os.makedirs("data", exist_ok=True)
+
 # Global model config/instances loaded once
 config = Config()
 train_path = "data/train.txt"
+val_path = "data/val.txt"
 
 if not os.path.exists(train_path):
-    print("Error: data/train.txt is missing. Please run python3 -m main first to prepare the dataset.")
-    sys.exit(1)
+    print("Data files train.txt not found in data/.")
+    print("Fetching Tiny Shakespeare dataset automatically to run the UI...")
+    url = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+    try:
+        with urllib.request.urlopen(url) as response:
+            text = response.read().decode('utf-8')
+        
+        n = len(text)
+        train_data = text[:int(n * 0.9)]
+        val_data = text[int(n * 0.9):]
+        
+        with open(train_path, "w", encoding="utf-8") as f:
+            f.write(train_data)
+        with open(val_path, "w", encoding="utf-8") as f:
+            f.write(val_data)
+        print("Successfully downloaded and prepared text files!")
+    except Exception as e:
+        print(f"Failed to download dataset: {e}")
+        sys.exit(1)
 
 with open(train_path, "r", encoding="utf-8") as f:
     text = f.read()
