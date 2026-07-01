@@ -103,13 +103,7 @@ class AutoLingoRequestHandler(BaseHTTPRequestHandler):
                     pred_text = ""
                 else:
                     # Generate predictions
-                    completion = generate_completion(model, tokenizer, config, prompt, max_new_tokens=max_tokens)
-                    
-                    # Extract only the newly predicted text (excluding the input prompt)
-                    if completion.startswith(prompt):
-                        pred_text = completion[len(prompt):]
-                    else:
-                        pred_text = completion
+                    pred_text = generate_completion(model, tokenizer, config, prompt, max_new_tokens=max_tokens, return_new_only=True)
                 
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")

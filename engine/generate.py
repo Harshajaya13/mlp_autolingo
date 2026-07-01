@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 
-def generate_completion(model, tokenizer, config, prompt, max_new_tokens=100, temperature=0.6, top_k=5):
+def generate_completion(model, tokenizer, config, prompt, max_new_tokens=100, temperature=0.7, top_k=15, return_new_only=False):
     model.eval()
     
     token_ids = tokenizer.encode(prompt)
@@ -10,6 +10,7 @@ def generate_completion(model, tokenizer, config, prompt, max_new_tokens=100, te
         token_ids = [tokenizer.stoi.get(' ', 0)]
         
     context = torch.tensor([token_ids], dtype=torch.long, device=config.device) 
+    input_len = len(token_ids)
     
     with torch.no_grad():
         for _ in range(max_new_tokens):
@@ -27,4 +28,6 @@ def generate_completion(model, tokenizer, config, prompt, max_new_tokens=100, te
             context = torch.cat((context, next_token), dim=1)
             
     output_ids = context[0].tolist()
+    if return_new_only:
+        return tokenizer.decode(output_ids[input_len:])
     return tokenizer.decode(output_ids)
