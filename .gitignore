@@ -2,3 +2,9 @@ __pycache__/
 checkpoints/
 data/
 results/
+archives/
+best_checkpoint.pt
+val.bin
+train.bin
+canary_dataset.txt
+latest_checkpoint.pt 
