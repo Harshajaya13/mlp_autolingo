@@ -6,7 +6,7 @@ vocab_size = 50257
 seq_len = 128         
 num_dims = 256         
 num_heads = 4          
-num_layers = 6        
+num_layers = 2        
 
 block_size = 128       
 batch_size = 32        

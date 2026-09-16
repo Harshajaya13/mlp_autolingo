@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 
 class GRUModel(nn.Module):
-    def __init__(self, vocab_size, seq_len=128, num_dims=256, num_heads=None, num_layers=2, p=0.1):
+    def __init__(self, vocab_size, seq_len=128, num_dims=256, num_heads=4, num_layers=2, p=0.1, **kwargs):
         super().__init__()
         self.seq_len = seq_len
         self.tok = nn.Embedding(vocab_size, num_dims)
@@ -32,6 +32,7 @@ class GRUModel(nn.Module):
             loss = F.cross_entropy(logits_flat, targets_flat)
 
         return logits, loss
+
 
 GPT = GRUModel
 GRU = GRUModel
