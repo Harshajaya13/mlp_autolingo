@@ -42,7 +42,7 @@ with torch.no_grad():
         logits, _ = model(idx_cond)
 
         logits = logits[:, -1, :]
-        
+
         logits = logits / temperature
 
         if top_k is not None:
